@@ -16,6 +16,10 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Admin from "./pages/Admin";
 import Premium from "./pages/Premium";
+import Dashboard from "./pages/Dashboard";
+import Music from "./pages/Music";
+import Development from "./pages/Development";
+import Productivity from "./pages/Productivity";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +44,10 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/premium" element={<Premium />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/music" element={<Music />} />
+            <Route path="/development" element={<Development />} />
+            <Route path="/productivity" element={<Productivity />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </HashRouter>
