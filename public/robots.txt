@@ -12,3 +12,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Sitemap ka full link niche add karein
+Sitemap: https://satyamprabhat25-collab.github.io/Fluxo-Bestie/sitemap.xml
