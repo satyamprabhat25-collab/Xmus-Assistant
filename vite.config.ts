@@ -3,10 +3,9 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Vercel ke liye base hamesha "/" hona chahiye taaki assets sahi se load hon
-  base: "/", 
+  // Isse badal kar "./" kar diya hai taaki assets kahin bhi hon, mil jayein
+  base: "./", 
 
   server: {
     host: "::",
