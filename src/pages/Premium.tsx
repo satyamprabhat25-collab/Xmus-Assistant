@@ -17,26 +17,26 @@ declare global {
 const plans = [{
   id: 'monthly',
   name: 'Monthly',
-  price: 500,
-  priceDisplay: '₹500',
+  price: 5,
+  priceDisplay: '$5',
   period: 'month',
   description: 'Perfect for trying out premium features',
   popular: false
 }, {
   id: 'quarterly',
   name: 'Quarterly',
-  price: 1000,
-  priceDisplay: '₹1,000',
+  price: 10,
+  priceDisplay: '$10',
   period: '3 months',
   description: 'Save 33% compared to monthly',
   popular: false
 }, {
   id: 'yearly',
   name: 'Yearly',
-  price: 2000,
-  priceDisplay: '₹2,000',
+  price: 19,
+  priceDisplay: '$19',
   period: 'year',
-  description: 'Best value - save 67%!',
+  description: 'Best value - save 68%!',
   popular: true
 }];
 

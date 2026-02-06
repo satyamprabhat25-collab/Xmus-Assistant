@@ -7,9 +7,9 @@ const corsHeaders = {
 };
 
 const plans: Record<string, { amount: number; duration: number; name: string }> = {
-  monthly: { amount: 500, duration: 30, name: 'Monthly Premium' },
-  quarterly: { amount: 1000, duration: 90, name: 'Quarterly Premium' },
-  yearly: { amount: 2000, duration: 365, name: 'Yearly Premium' },
+  monthly: { amount: 5, duration: 30, name: 'Monthly Premium' },
+  quarterly: { amount: 10, duration: 90, name: 'Quarterly Premium' },
+  yearly: { amount: 19, duration: 365, name: 'Yearly Premium' },
 };
 
 const PAYMENT_TIMEOUT = 30000; // 30 seconds
@@ -119,8 +119,8 @@ serve(async (req) => {
     // Create Razorpay order - receipt max 40 chars
     const shortId = user.id.substring(0, 8);
     const orderData = {
-      amount: plan.amount * 100, // Amount in paise
-      currency: 'INR',
+      amount: plan.amount * 100, // Amount in cents
+      currency: 'USD',
       receipt: `rcpt_${shortId}_${Date.now()}`,
       notes: {
         user_id: user.id,

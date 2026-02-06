@@ -7,9 +7,9 @@ const corsHeaders = {
 };
 
 const plans: Record<string, { amount: number; duration: number }> = {
-  monthly: { amount: 500, duration: 30 },
-  quarterly: { amount: 1000, duration: 90 },
-  yearly: { amount: 2000, duration: 365 },
+  monthly: { amount: 5, duration: 30 },
+  quarterly: { amount: 10, duration: 90 },
+  yearly: { amount: 19, duration: 365 },
 };
 
 serve(async (req) => {
@@ -99,7 +99,7 @@ serve(async (req) => {
         plan: planId,
         status: 'active',
         amount: plan.amount,
-        currency: 'INR',
+        currency: 'USD',
         starts_at: startsAt.toISOString(),
         expires_at: expiresAt.toISOString(),
         razorpay_order_id,

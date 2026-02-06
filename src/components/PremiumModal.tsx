@@ -59,7 +59,7 @@ export function PremiumModal({ open, onOpenChange, linkTitle }: PremiumModalProp
 
         <div className="p-4 bg-secondary/50 rounded-xl text-center">
             <p className="text-sm text-muted-foreground mb-1">Starting from just</p>
-            <p className="text-3xl font-bold text-primary">₹500<span className="text-base font-normal text-muted-foreground">/month</span></p>
+            <p className="text-3xl font-bold text-primary">$5<span className="text-base font-normal text-muted-foreground">/month</span></p>
           </div>
         </div>
 
