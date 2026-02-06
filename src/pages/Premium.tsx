@@ -7,13 +7,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-
 declare global {
   interface Window {
     Razorpay: any;
   }
 }
-
 const plans = [{
   id: 'monthly',
   name: 'Monthly',
@@ -39,7 +37,6 @@ const plans = [{
   description: 'Best value - save 68%!',
   popular: true
 }];
-
 const features = [{
   icon: Zap,
   title: 'AI Image Generator',
@@ -57,14 +54,15 @@ const features = [{
   title: 'Early Access',
   description: 'Get new features before everyone else'
 }];
-
 export default function Premium() {
-  const { user, session } = useAuth();
+  const {
+    user,
+    session
+  } = useAuth();
   const navigate = useNavigate();
   const [selectedPlan, setSelectedPlan] = useState('yearly');
   const [isLoading, setIsLoading] = useState(false);
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
-
   useEffect(() => {
     // Check if Razorpay is already loaded
     if (window.Razorpay) {
@@ -84,48 +82,45 @@ export default function Premium() {
       toast.error('Payment system failed to load. Please refresh the page.');
     };
     document.body.appendChild(script);
-    
     return () => {
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
     };
   }, []);
-
   const handleSubscribe = async (planId: string) => {
     if (!user) {
       toast.error('Please sign in to subscribe');
       navigate('/auth');
       return;
     }
-
     if (!razorpayLoaded || !window.Razorpay) {
       toast.error('Payment system is loading. Please wait a moment and try again.');
       return;
     }
-
     setIsLoading(true);
-
     try {
       // Create order
-      const { data, error } = await supabase.functions.invoke('create-razorpay-order', {
-        body: { planId },
+      const {
+        data,
+        error
+      } = await supabase.functions.invoke('create-razorpay-order', {
+        body: {
+          planId
+        }
       });
-
       if (error) {
         console.error('Order creation error:', error);
         toast.error(error.message || 'Failed to create order. Please try again.');
         setIsLoading(false);
         return;
       }
-
       if (!data || !data.orderId) {
         console.error('Invalid order data:', data);
         toast.error('Failed to create order. Please try again.');
         setIsLoading(false);
         return;
       }
-
       const options = {
         key: data.keyId,
         amount: data.amount,
@@ -136,21 +131,22 @@ export default function Premium() {
         handler: async function (response: any) {
           try {
             // Verify payment
-            const { data: verifyData, error: verifyError } = await supabase.functions.invoke('verify-razorpay-payment', {
+            const {
+              data: verifyData,
+              error: verifyError
+            } = await supabase.functions.invoke('verify-razorpay-payment', {
               body: {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
-                planId,
-              },
+                planId
+              }
             });
-
             if (verifyError) {
               console.error('Verification error:', verifyError);
               toast.error('Payment verification failed. Please contact support.');
               return;
             }
-
             toast.success('🎉 Welcome to Premium! Enjoy your exclusive access.');
             navigate('/dashboard');
           } catch (err) {
@@ -159,18 +155,18 @@ export default function Premium() {
           }
         },
         prefill: {
-          email: user.email,
+          email: user.email
         },
         theme: {
-          color: '#f59e0b',
+          color: '#f59e0b'
         },
         modal: {
           ondismiss: function () {
             setIsLoading(false);
           },
           escape: true,
-          backdropclose: false,
-        },
+          backdropclose: false
+        }
       };
 
       // Double check Razorpay is available before creating instance
@@ -180,7 +176,6 @@ export default function Premium() {
         setIsLoading(false);
         return;
       }
-
       try {
         const razorpay = new window.Razorpay(options);
         razorpay.on('payment.failed', function (response: any) {
@@ -188,7 +183,7 @@ export default function Premium() {
           toast.error(response.error.description || 'Payment failed. Please try again.');
           setIsLoading(false);
         });
-        
+
         // Small delay to ensure modal can render properly
         setTimeout(() => {
           razorpay.open();
@@ -212,7 +207,7 @@ export default function Premium() {
             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
               <Globe className="h-6 w-6 text-primary-foreground" />
             </div>
-            <span className="font-display font-bold text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">​Www.Tomax.com</span>
+            <span className="font-display font-bold text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">​WWW.FLUXO.COM</span>
           </Link>
           <Link to="/">
             <Button variant="ghost" className="gap-2">
