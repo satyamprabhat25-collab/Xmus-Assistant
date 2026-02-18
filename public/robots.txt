@@ -14,4 +14,4 @@ User-agent: *
 Allow: /
 
 # Sitemap link corrected to your Vercel domain
-Sitemap: https://fluxo-bestie.vercel.app/sitemap.xml
+Sitemap: https://xmus-assistant.vercel.app/sitemap.xml
