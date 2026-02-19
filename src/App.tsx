@@ -16,6 +16,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Admin from "./pages/Admin";
 import Premium from "./pages/Premium";
+import PaymentStatus from "./pages/PaymentStatus";
 import Dashboard from "./pages/Dashboard";
 import Music from "./pages/Music";
 import Development from "./pages/Development";
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/premium" element={<Premium />} />
+            <Route path="/payment-status" element={<PaymentStatus />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/music" element={<Music />} />
             <Route path="/development" element={<Development />} />

@@ -12,78 +12,19 @@ const plans: Record<string, { amount: number; duration: number; name: string }> 
   yearly: { amount: 19, duration: 365, name: 'Yearly Premium' },
 };
 
-const PAYMENT_TIMEOUT = 30000; // 30 seconds
-
-async function callRazorpayWithRetry(url: string, options: RequestInit, attempt = 1): Promise<any> {
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), PAYMENT_TIMEOUT);
-
-    const response = await fetch(url, {
-      ...options,
-      signal: controller.signal,
-    });
-    clearTimeout(timeoutId);
-
-    const contentType = response.headers.get("content-type");
-
-    if (!contentType?.includes("application/json")) {
-      const textResponse = await response.text();
-      console.error("Razorpay returned non-JSON:", textResponse.substring(0, 200));
-      throw new Error("Razorpay returned an invalid response. Please try again.");
-    }
-
-    let data;
-    try {
-      data = await response.json();
-    } catch (parseError) {
-      console.error("Failed to parse Razorpay response as JSON:", parseError);
-      throw new Error("Razorpay returned a malformed JSON response");
-    }
-
-    if (response.status >= 400 && response.status < 500) {
-      const errorMsg = data.error?.description || data.description || `Client error: ${response.status}`;
-      console.error(`Razorpay 4xx error (no retry):`, errorMsg);
-      throw new Error(errorMsg);
-    }
-
-    if (!response.ok) {
-      throw new Error(`Razorpay error: ${response.status}`);
-    }
-
-    return data;
-  } catch (error) {
-    if (error.message?.includes("Client error") || error.message?.includes("invalid response")) {
-      throw error;
-    }
-
-    console.error(`Razorpay error (attempt ${attempt}/3):`, error.message);
-
-    if (attempt >= 3) {
-      throw new Error(`Razorpay unavailable after 3 attempts: ${error.message}`);
-    }
-    await new Promise(r => setTimeout(r, 2000 * Math.pow(2, attempt - 1)));
-    return callRazorpayWithRetry(url, options, attempt + 1);
-  }
-}
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // Validate Razorpay keys first
     const RAZORPAY_KEY_ID = Deno.env.get('RAZORPAY_KEY_ID');
     const RAZORPAY_KEY_SECRET = Deno.env.get('RAZORPAY_KEY_SECRET');
 
     if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
       console.error("Razorpay keys not configured");
       return new Response(
-        JSON.stringify({ 
-          error: "Payment system not configured",
-          details: "Please contact support"
-        }),
+        JSON.stringify({ error: "Payment system not configured" }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -106,7 +47,7 @@ serve(async (req) => {
       );
     }
 
-    const { planId } = await req.json();
+    const { planId, callbackUrl } = await req.json();
     const plan = plans[planId];
     
     if (!plan) {
@@ -116,46 +57,81 @@ serve(async (req) => {
       );
     }
 
-    // Create Razorpay order - receipt max 40 chars
-    const shortId = user.id.substring(0, 8);
-    const orderData = {
-      amount: plan.amount * 100, // Amount in cents
+    const auth = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`);
+
+    // Create a Razorpay Payment Link - works on all platforms (mobile, web, Capacitor, all countries)
+    const paymentLinkData = {
+      amount: plan.amount * 100, // Amount in smallest currency unit (cents for USD)
       currency: 'USD',
-      receipt: `rcpt_${shortId}_${Date.now()}`,
+      accept_partial: false,
+      description: plan.name,
+      customer: {
+        email: user.email || '',
+      },
+      notify: {
+        email: true,
+      },
+      reminder_enable: false,
       notes: {
         user_id: user.id,
         plan_id: planId,
       },
+      callback_url: callbackUrl || '',
+      callback_method: 'get',
     };
 
-    const auth = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`);
-    
-    const order = await callRazorpayWithRetry('https://api.razorpay.com/v1/orders', {
+    console.log('Creating payment link for user:', user.id, 'plan:', planId);
+
+    const response = await fetch('https://api.razorpay.com/v1/payment_links', {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${auth}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(orderData),
+      body: JSON.stringify(paymentLinkData),
     });
 
-    if (!order.id) {
-      console.error('Razorpay order missing ID:', order);
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Razorpay payment link error:', data);
       return new Response(
-        JSON.stringify({ error: 'Failed to create order - missing order ID' }),
+        JSON.stringify({ error: data.error?.description || 'Failed to create payment link' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
+    if (!data.short_url) {
+      console.error('No short_url in response:', data);
+      return new Response(
+        JSON.stringify({ error: 'Failed to generate payment URL' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    console.log('Payment link created:', data.id);
+
+    // Store the payment link reference for verification later
+    const adminClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    );
+
+    await adminClient.from('subscriptions').insert({
+      user_id: user.id,
+      plan: planId,
+      status: 'pending',
+      amount: plan.amount,
+      currency: 'USD',
+      starts_at: new Date().toISOString(),
+      expires_at: new Date().toISOString(), // Will be updated on payment confirmation
+      razorpay_order_id: data.id, // Store payment link ID
+    });
+
     return new Response(
       JSON.stringify({
-        orderId: order.id,
-        amount: order.amount,
-        currency: order.currency,
-        keyId: RAZORPAY_KEY_ID,
-        planName: plan.name,
-        planId,
-        duration: plan.duration,
+        paymentUrl: data.short_url,
+        paymentLinkId: data.id,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
