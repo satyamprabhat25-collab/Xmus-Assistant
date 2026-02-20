@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  BookOpen, Cpu, Trophy, Film, Music, Newspaper, Rocket, Heart, Star, TrendingUp, 
-  Crown, ArrowRight, Search, Sparkles, Globe, Zap, ChevronRight, Play, Code, 
+import {
+  BookOpen, Cpu, Trophy, Film, Music, Newspaper, Rocket, Heart, Star, TrendingUp,
+  Crown, ArrowRight, Search, Sparkles, Globe, Zap, ChevronRight, Play, Code,
   Palette, Briefcase, Gamepad2, Brain, Camera, Headphones, Monitor, Wrench,
-  ExternalLink, Lock, Users, Award
-} from 'lucide-react';
+  ExternalLink, Lock, Users, Award } from
+'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -15,105 +15,105 @@ import { PremiumModal } from '@/components/PremiumModal';
 
 // Categories with icons
 const categories = [
-  { id: '1', name: 'Space & Universe', slug: 'space', icon: Rocket, color: 'from-indigo-500 to-purple-600', count: 15, premium: true },
-  { id: '2', name: 'AI & Technology', slug: 'ai', icon: Brain, color: 'from-violet-500 to-purple-600', count: 25, premium: true },
-  { id: '3', name: 'Games', slug: 'games', icon: Gamepad2, color: 'from-emerald-500 to-green-600', count: 30, premium: true },
-  { id: '4', name: 'Entertainment', slug: 'entertainment', icon: Film, color: 'from-pink-500 to-rose-600', count: 45 },
-  { id: '5', name: 'Music & Audio', slug: 'music', icon: Headphones, color: 'from-cyan-500 to-blue-600', count: 20 },
-  { id: '6', name: 'Productivity', slug: 'productivity', icon: Briefcase, color: 'from-amber-500 to-orange-600', count: 22, premium: true },
-  { id: '7', name: 'Development', slug: 'development', icon: Code, color: 'from-slate-500 to-zinc-600', count: 28 },
-  { id: '8', name: 'Design', slug: 'design', icon: Palette, color: 'from-fuchsia-500 to-pink-600', count: 18, premium: true },
-];
+{ id: '1', name: 'Space & Universe', slug: 'space', icon: Rocket, color: 'from-indigo-500 to-purple-600', count: 15, premium: true },
+{ id: '2', name: 'AI & Technology', slug: 'ai', icon: Brain, color: 'from-violet-500 to-purple-600', count: 25, premium: true },
+{ id: '3', name: 'Games', slug: 'games', icon: Gamepad2, color: 'from-emerald-500 to-green-600', count: 30, premium: true },
+{ id: '4', name: 'Entertainment', slug: 'entertainment', icon: Film, color: 'from-pink-500 to-rose-600', count: 45 },
+{ id: '5', name: 'Music & Audio', slug: 'music', icon: Headphones, color: 'from-cyan-500 to-blue-600', count: 20 },
+{ id: '6', name: 'Productivity', slug: 'productivity', icon: Briefcase, color: 'from-amber-500 to-orange-600', count: 22, premium: true },
+{ id: '7', name: 'Development', slug: 'development', icon: Code, color: 'from-slate-500 to-zinc-600', count: 28 },
+{ id: '8', name: 'Design', slug: 'design', icon: Palette, color: 'from-fuchsia-500 to-pink-600', count: 18, premium: true }];
+
 
 // Premium Featured Links - Big Cards
 const premiumFeaturedLinks = [
-  {
-    id: '1', title: 'NASA Eyes', description: 'Explore the solar system in stunning 3D visualization',
-    image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=600', category: 'Space',
-    url: 'https://eyes.nasa.gov/', clicks: 125000, premium: true
-  },
-  {
-    id: '2', title: 'DALL-E 3', description: 'Create photorealistic images from text descriptions',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600', category: 'AI',
-    url: 'https://openai.com/dall-e-3', clicks: 89000, premium: true
-  },
-  {
-    id: '3', title: 'Figma', description: 'Professional collaborative design platform',
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600', category: 'Design',
-    url: 'https://www.figma.com/', clicks: 156000, premium: true
-  },
-  {
-    id: '4', title: 'Discord', description: 'Voice, video & text communication platform',
-    image: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600', category: 'Social',
-    url: 'https://discord.com/', clicks: 234000, premium: true
-  },
-  {
-    id: '5', title: 'Notion', description: 'All-in-one workspace for notes, tasks & wikis',
-    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600', category: 'Productivity',
-    url: 'https://www.notion.so/', clicks: 178000, premium: true
-  },
-  {
-    id: '6', title: 'Unity', description: 'Professional game development engine',
-    image: 'https://images.unsplash.com/photo-1556438064-2d7646166914?w=600', category: 'Games',
-    url: 'https://unity.com/', clicks: 98000, premium: true
-  },
-  {
-    id: '7', title: 'TinyWow', description: 'Free AI-powered PDF, video, image & other online tools',
-    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600', category: 'Tools',
-    url: 'https://tinywow.com/', clicks: 145000, premium: true
-  },
-  {
-    id: '8', title: 'Summarize.tech', description: 'AI-powered video summarization tool',
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600', category: 'AI',
-    url: 'https://www.summarize.tech/', clicks: 67000, premium: true
-  },
-];
+{
+  id: '1', title: 'NASA Eyes', description: 'Explore the solar system in stunning 3D visualization',
+  image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=600', category: 'Space',
+  url: 'https://eyes.nasa.gov/', clicks: 125000, premium: true
+},
+{
+  id: '2', title: 'DALL-E 3', description: 'Create photorealistic images from text descriptions',
+  image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600', category: 'AI',
+  url: 'https://openai.com/dall-e-3', clicks: 89000, premium: true
+},
+{
+  id: '3', title: 'Figma', description: 'Professional collaborative design platform',
+  image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600', category: 'Design',
+  url: 'https://www.figma.com/', clicks: 156000, premium: true
+},
+{
+  id: '4', title: 'Discord', description: 'Voice, video & text communication platform',
+  image: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600', category: 'Social',
+  url: 'https://discord.com/', clicks: 234000, premium: true
+},
+{
+  id: '5', title: 'Notion', description: 'All-in-one workspace for notes, tasks & wikis',
+  image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600', category: 'Productivity',
+  url: 'https://www.notion.so/', clicks: 178000, premium: true
+},
+{
+  id: '6', title: 'Unity', description: 'Professional game development engine',
+  image: 'https://images.unsplash.com/photo-1556438064-2d7646166914?w=600', category: 'Games',
+  url: 'https://unity.com/', clicks: 98000, premium: true
+},
+{
+  id: '7', title: 'TinyWow', description: 'Free AI-powered PDF, video, image & other online tools',
+  image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600', category: 'Tools',
+  url: 'https://tinywow.com/', clicks: 145000, premium: true
+},
+{
+  id: '8', title: 'Summarize.tech', description: 'AI-powered video summarization tool',
+  image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600', category: 'AI',
+  url: 'https://www.summarize.tech/', clicks: 67000, premium: true
+}];
+
 
 // Free Featured Links
 const freeFeaturedLinks = [
-  {
-    id: '1', title: 'ChatGPT', description: 'AI assistant for conversations & tasks',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400', category: 'AI',
-    url: 'https://chat.openai.com/', clicks: 450000
-  },
-  {
-    id: '2', title: 'Solar System Scope', description: 'Interactive 3D solar system explorer',
-    image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400', category: 'Space',
-    url: 'https://www.solarsystemscope.com/', clicks: 89000
-  },
-  {
-    id: '3', title: 'Canva', description: 'Easy graphic design for everyone',
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400', category: 'Design',
-    url: 'https://www.canva.com/', clicks: 320000
-  },
-  {
-    id: '4', title: 'Crunchyroll', description: 'Watch anime & read manga',
-    image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400', category: 'Entertainment',
-    url: 'https://www.crunchyroll.com/', clicks: 280000
-  },
-];
+{
+  id: '1', title: 'ChatGPT', description: 'AI assistant for conversations & tasks',
+  image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400', category: 'AI',
+  url: 'https://chat.openai.com/', clicks: 450000
+},
+{
+  id: '2', title: 'Solar System Scope', description: 'Interactive 3D solar system explorer',
+  image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400', category: 'Space',
+  url: 'https://www.solarsystemscope.com/', clicks: 89000
+},
+{
+  id: '3', title: 'Canva', description: 'Easy graphic design for everyone',
+  image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400', category: 'Design',
+  url: 'https://www.canva.com/', clicks: 320000
+},
+{
+  id: '4', title: 'Crunchyroll', description: 'Watch anime & read manga',
+  image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400', category: 'Entertainment',
+  url: 'https://www.crunchyroll.com/', clicks: 280000
+}];
+
 
 // Trending Links
 const trendingLinks = [
-  { id: '1', title: 'WolframAlpha - Computational Knowledge', url: 'https://www.wolframalpha.com/', clicks: 189000 },
-  { id: '2', title: 'Midjourney - AI Art Generator', url: 'https://www.midjourney.com/', clicks: 245000, premium: true },
-  { id: '3', title: 'GitHub - Code Repository', url: 'https://github.com/', clicks: 356000 },
-  { id: '4', title: 'Spotify - Music Streaming', url: 'https://open.spotify.com/', clicks: 420000 },
-  { id: '5', title: 'Linear - Project Management', url: 'https://linear.app/', clicks: 78000, premium: true },
-  { id: '6', title: 'Pinterest - Visual Discovery', url: 'https://www.pinterest.com/', clicks: 290000 },
-  { id: '7', title: 'Unreal Engine - Game Dev', url: 'https://www.unrealengine.com/', clicks: 134000, premium: true },
-  { id: '8', title: 'Khan Academy - Free Learning', url: 'https://www.khanacademy.org/', clicks: 267000 },
-];
+{ id: '1', title: 'WolframAlpha - Computational Knowledge', url: 'https://www.wolframalpha.com/', clicks: 189000 },
+{ id: '2', title: 'Midjourney - AI Art Generator', url: 'https://www.midjourney.com/', clicks: 245000, premium: true },
+{ id: '3', title: 'GitHub - Code Repository', url: 'https://github.com/', clicks: 356000 },
+{ id: '4', title: 'Spotify - Music Streaming', url: 'https://open.spotify.com/', clicks: 420000 },
+{ id: '5', title: 'Linear - Project Management', url: 'https://linear.app/', clicks: 78000, premium: true },
+{ id: '6', title: 'Pinterest - Visual Discovery', url: 'https://www.pinterest.com/', clicks: 290000 },
+{ id: '7', title: 'Unreal Engine - Game Dev', url: 'https://www.unrealengine.com/', clicks: 134000, premium: true },
+{ id: '8', title: 'Khan Academy - Free Learning', url: 'https://www.khanacademy.org/', clicks: 267000 }];
+
 
 // More Premium Links Grid
 const morePremiumLinks = [
-  { title: 'Adobe Creative Cloud', url: 'https://www.adobe.com/creativecloud.html', icon: Palette, category: 'Design' },
-  { title: 'Unsplash Pro', url: 'https://unsplash.com/', icon: Camera, category: 'Photos' },
-  { title: 'Steam', url: 'https://store.steampowered.com/', icon: Gamepad2, category: 'Games' },
-  { title: 'Duolingo Plus', url: 'https://www.duolingo.com/', icon: BookOpen, category: 'Learning' },
-  { title: 'Grammarly', url: 'https://www.grammarly.com/', icon: BookOpen, category: 'Writing' },
-  { title: 'Loom', url: 'https://www.loom.com/', icon: Monitor, category: 'Video' },
-];
+{ title: 'Adobe Creative Cloud', url: 'https://www.adobe.com/creativecloud.html', icon: Palette, category: 'Design' },
+{ title: 'Unsplash Pro', url: 'https://unsplash.com/', icon: Camera, category: 'Photos' },
+{ title: 'Steam', url: 'https://store.steampowered.com/', icon: Gamepad2, category: 'Games' },
+{ title: 'Duolingo Plus', url: 'https://www.duolingo.com/', icon: BookOpen, category: 'Learning' },
+{ title: 'Grammarly', url: 'https://www.grammarly.com/', icon: BookOpen, category: 'Writing' },
+{ title: 'Loom', url: 'https://www.loom.com/', icon: Monitor, category: 'Video' }];
+
 
 export default function Index() {
   const { user } = useAuth();
@@ -134,11 +134,11 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      <PremiumModal 
-        open={premiumModalOpen} 
-        onOpenChange={setPremiumModalOpen} 
-        linkTitle={selectedLinkTitle}
-      />
+      <PremiumModal
+        open={premiumModalOpen}
+        onOpenChange={setPremiumModalOpen}
+        linkTitle={selectedLinkTitle} />
+
 
       {/* Navbar */}
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -161,23 +161,23 @@ export default function Index() {
           </div>
 
           <div className="flex items-center gap-3">
-            {user ? (
-              <>
+            {user ?
+            <>
                 <Link to="/dashboard">
                   <Button variant="outline" size="sm" className="gap-2">
                     <Users className="h-4 w-4" />
                     Dashboard
                   </Button>
                 </Link>
-                {isPremium && (
-                  <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
+                {isPremium &&
+              <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
                     <Crown className="h-3 w-3 mr-1" />
                     Premium
                   </Badge>
-                )}
-              </>
-            ) : (
-              <>
+              }
+              </> :
+
+            <>
                 <Link to="/auth">
                   <Button variant="ghost" size="sm">Sign in</Button>
                 </Link>
@@ -188,7 +188,7 @@ export default function Index() {
                   </Button>
                 </Link>
               </>
-            )}
+            }
           </div>
         </div>
       </header>
@@ -225,12 +225,12 @@ export default function Index() {
             {/* Search Bar - Larger */}
             <div className="relative max-w-2xl mx-auto mb-10">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground" />
-              <Input 
-                placeholder="Search for AI tools, games, design software..." 
-                value={searchQuery} 
-                onChange={e => setSearchQuery(e.target.value)} 
-                className="pl-14 pr-6 h-16 text-lg rounded-2xl border-2 border-border focus:border-primary shadow-xl bg-background/80 backdrop-blur-sm" 
-              />
+              <Input
+                placeholder="Search for AI tools, games, design software..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-14 pr-6 h-16 text-lg rounded-2xl border-2 border-border focus:border-primary shadow-xl bg-background/80 backdrop-blur-sm" />
+
               <Button className="absolute right-2 top-1/2 -translate-y-1/2 rounded-xl h-12 px-6" size="lg">
                 <Search className="h-5 w-5 mr-2" />
                 Search
@@ -271,25 +271,25 @@ export default function Index() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {categories.map(category => (
-            <div 
-              key={category.id} 
-              onClick={(e) => handleLinkClick(e, '#', category.premium || false, category.name)}
-              className="group relative bg-card border border-border rounded-3xl p-8 hover:shadow-2xl hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 cursor-pointer"
-            >
-              {category.premium && (
-                <Badge className="absolute -top-3 -right-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 shadow-lg">
+          {categories.map((category) =>
+          <div
+            key={category.id}
+            onClick={(e) => handleLinkClick(e, '#', category.premium || false, category.name)}
+            className="group relative bg-card border border-border rounded-3xl p-8 hover:shadow-2xl hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+
+              {category.premium &&
+            <Badge className="absolute -top-3 -right-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 shadow-lg">
                   <Lock className="h-3 w-3 mr-1" />
                   Premium
                 </Badge>
-              )}
+            }
               <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-lg`}>
                 <category.icon className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{category.name}</h3>
               <p className="text-sm text-muted-foreground">{category.count} links</p>
             </div>
-          ))}
+          )}
         </div>
       </section>
 
@@ -315,15 +315,15 @@ export default function Index() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {premiumFeaturedLinks.map(link => (
-              <a 
-                key={link.id} 
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => handleLinkClick(e, link.url, link.premium, link.title)}
-                className="group bg-card border border-border rounded-3xl overflow-hidden hover:shadow-2xl hover:border-amber-500/30 transition-all duration-300 block hover:-translate-y-2"
-              >
+            {premiumFeaturedLinks.map((link) =>
+            <a
+              key={link.id}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => handleLinkClick(e, link.url, link.premium, link.title)}
+              className="group bg-card border border-border rounded-3xl overflow-hidden hover:shadow-2xl hover:border-amber-500/30 transition-all duration-300 block hover:-translate-y-2">
+
                 <div className="relative aspect-video overflow-hidden">
                   <img src={link.image} alt={link.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -351,7 +351,7 @@ export default function Index() {
                   </div>
                 </div>
               </a>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -371,14 +371,14 @@ export default function Index() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {freeFeaturedLinks.map(link => (
-            <a 
-              key={link.id} 
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-card border border-border rounded-3xl overflow-hidden hover:shadow-2xl hover:border-primary/30 transition-all duration-300 block hover:-translate-y-2"
-            >
+          {freeFeaturedLinks.map((link) =>
+          <a
+            key={link.id}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-card border border-border rounded-3xl overflow-hidden hover:shadow-2xl hover:border-primary/30 transition-all duration-300 block hover:-translate-y-2">
+
               <div className="relative aspect-video overflow-hidden">
                 <img src={link.image} alt={link.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -398,7 +398,7 @@ export default function Index() {
                 </div>
               </div>
             </a>
-          ))}
+          )}
         </div>
       </section>
 
@@ -416,15 +416,15 @@ export default function Index() {
               </div>
 
               <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-lg">
-                {trendingLinks.map((link, index) => (
-                  <a 
-                    key={link.id} 
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => handleLinkClick(e, link.url, link.premium || false, link.title)}
-                    className="flex items-center gap-5 p-5 border-b border-border last:border-0 hover:bg-secondary/50 transition-colors"
-                  >
+                {trendingLinks.map((link, index) =>
+                <a
+                  key={link.id}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => handleLinkClick(e, link.url, link.premium || false, link.title)}
+                  className="flex items-center gap-5 p-5 border-b border-border last:border-0 hover:bg-secondary/50 transition-colors">
+
                     <span className="text-3xl font-bold text-muted-foreground w-10">{index + 1}</span>
                     <div className="flex-1">
                       <h3 className="font-medium text-lg flex items-center gap-2">
@@ -435,7 +435,7 @@ export default function Index() {
                     </div>
                     <ChevronRight className="h-5 w-5 text-muted-foreground" />
                   </a>
-                ))}
+                )}
               </div>
             </div>
 
@@ -466,19 +466,19 @@ export default function Index() {
                           Yearly 
                           <Badge className="bg-green-500 text-white border-0 text-xs">Save 67%</Badge>
                         </span>
-                        <span className="font-bold text-primary text-lg">$20</span>
+                        <span className="font-bold text-primary text-lg">$19</span>
                       </div>
                     </div>
                     
                     <ul className="space-y-4 mb-8">
-                      {['NASA Eyes & Space Tools', 'Figma, Notion, Discord', 'All AI Image Generators', 'Professional Games & Dev Tools', 'Ad-free experience'].map(feature => (
-                        <li key={feature} className="flex items-center gap-3 text-sm">
+                      {['NASA Eyes & Space Tools', 'Figma, Notion, Discord', 'All AI Image Generators', 'Professional Games & Dev Tools', 'Ad-free experience'].map((feature) =>
+                      <li key={feature} className="flex items-center gap-3 text-sm">
                           <div className="h-6 w-6 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
                             <Zap className="h-3 w-3 text-white" />
                           </div>
                           {feature}
                         </li>
-                      ))}
+                      )}
                     </ul>
                     <Link to="/premium">
                       <Button className="w-full gap-2 h-14 text-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600" size="lg">
@@ -502,15 +502,15 @@ export default function Index() {
         </div>
 
         <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {morePremiumLinks.map((link) => (
-            <a
-              key={link.title}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => handleLinkClick(e, link.url, true, link.title)}
-              className="group bg-card border border-border rounded-2xl p-6 hover:shadow-xl hover:border-amber-500/30 transition-all duration-300 text-center hover:-translate-y-1"
-            >
+          {morePremiumLinks.map((link) =>
+          <a
+            key={link.title}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => handleLinkClick(e, link.url, true, link.title)}
+            className="group bg-card border border-border rounded-2xl p-6 hover:shadow-xl hover:border-amber-500/30 transition-all duration-300 text-center hover:-translate-y-1">
+
               <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <link.icon className="h-6 w-6 text-amber-500" />
               </div>
@@ -518,7 +518,7 @@ export default function Index() {
               <p className="text-xs text-muted-foreground">{link.category}</p>
               <Lock className="h-3 w-3 text-amber-500 mx-auto mt-2" />
             </a>
-          ))}
+          )}
         </div>
       </section>
 
@@ -568,6 +568,6 @@ export default function Index() {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>);
+
 }
