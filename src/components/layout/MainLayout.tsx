@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Navbar } from './Navbar';
 import { MobileNav } from './MobileNav';
+import { LucixAIWidget } from '@/components/LucixAIWidget';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ export function MainLayout({ children }: MainLayoutProps) {
         {children}
       </main>
       <MobileNav />
+      <LucixAIWidget />
     </div>
   );
 }
