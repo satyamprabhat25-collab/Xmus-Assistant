@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSubscription } from '@/hooks/useSubscription';
 import { PremiumModal } from '@/components/PremiumModal';
+import { EmbeddedBrowser } from '@/components/EmbeddedBrowser';
 
 // Categories with icons
 const categories = [
@@ -24,74 +25,23 @@ const categories = [
 { id: '7', name: 'Development', slug: 'development', icon: Code, color: 'from-slate-500 to-zinc-600', count: 28 },
 { id: '8', name: 'Design', slug: 'design', icon: Palette, color: 'from-fuchsia-500 to-pink-600', count: 18, premium: true }];
 
-
-// Premium Featured Links - Big Cards
+// Premium Featured Links
 const premiumFeaturedLinks = [
-{
-  id: '1', title: 'NASA Eyes', description: 'Explore the solar system in stunning 3D visualization',
-  image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=600', category: 'Space',
-  url: 'https://eyes.nasa.gov/', clicks: 125000, premium: true
-},
-{
-  id: '2', title: 'DALL-E 3', description: 'Create photorealistic images from text descriptions',
-  image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600', category: 'AI',
-  url: 'https://openai.com/dall-e-3', clicks: 89000, premium: true
-},
-{
-  id: '3', title: 'Figma', description: 'Professional collaborative design platform',
-  image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600', category: 'Design',
-  url: 'https://www.figma.com/', clicks: 156000, premium: true
-},
-{
-  id: '4', title: 'Discord', description: 'Voice, video & text communication platform',
-  image: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600', category: 'Social',
-  url: 'https://discord.com/', clicks: 234000, premium: true
-},
-{
-  id: '5', title: 'Notion', description: 'All-in-one workspace for notes, tasks & wikis',
-  image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600', category: 'Productivity',
-  url: 'https://www.notion.so/', clicks: 178000, premium: true
-},
-{
-  id: '6', title: 'Unity', description: 'Professional game development engine',
-  image: 'https://images.unsplash.com/photo-1556438064-2d7646166914?w=600', category: 'Games',
-  url: 'https://unity.com/', clicks: 98000, premium: true
-},
-{
-  id: '7', title: 'TinyWow', description: 'Free AI-powered PDF, video, image & other online tools',
-  image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600', category: 'Tools',
-  url: 'https://tinywow.com/', clicks: 145000, premium: true
-},
-{
-  id: '8', title: 'Summarize.tech', description: 'AI-powered video summarization tool',
-  image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600', category: 'AI',
-  url: 'https://www.summarize.tech/', clicks: 67000, premium: true
-}];
-
+{ id: '1', title: 'NASA Eyes', description: 'Explore the solar system in stunning 3D visualization', image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=600', category: 'Space', url: 'https://eyes.nasa.gov/', clicks: 125000, premium: true },
+{ id: '2', title: 'DALL-E 3', description: 'Create photorealistic images from text descriptions', image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600', category: 'AI', url: 'https://openai.com/dall-e-3', clicks: 89000, premium: true },
+{ id: '3', title: 'Figma', description: 'Professional collaborative design platform', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600', category: 'Design', url: 'https://www.figma.com/', clicks: 156000, premium: true },
+{ id: '4', title: 'Discord', description: 'Voice, video & text communication platform', image: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600', category: 'Social', url: 'https://discord.com/', clicks: 234000, premium: true },
+{ id: '5', title: 'Notion', description: 'All-in-one workspace for notes, tasks & wikis', image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600', category: 'Productivity', url: 'https://www.notion.so/', clicks: 178000, premium: true },
+{ id: '6', title: 'Unity', description: 'Professional game development engine', image: 'https://images.unsplash.com/photo-1556438064-2d7646166914?w=600', category: 'Games', url: 'https://unity.com/', clicks: 98000, premium: true },
+{ id: '7', title: 'TinyWow', description: 'Free AI-powered PDF, video, image & other online tools', image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600', category: 'Tools', url: 'https://tinywow.com/', clicks: 145000, premium: true },
+{ id: '8', title: 'Summarize.tech', description: 'AI-powered video summarization tool', image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600', category: 'AI', url: 'https://www.summarize.tech/', clicks: 67000, premium: true }];
 
 // Free Featured Links
 const freeFeaturedLinks = [
-{
-  id: '1', title: 'ChatGPT', description: 'AI assistant for conversations & tasks',
-  image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400', category: 'AI',
-  url: 'https://chat.openai.com/', clicks: 450000
-},
-{
-  id: '2', title: 'Solar System Scope', description: 'Interactive 3D solar system explorer',
-  image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400', category: 'Space',
-  url: 'https://www.solarsystemscope.com/', clicks: 89000
-},
-{
-  id: '3', title: 'Canva', description: 'Easy graphic design for everyone',
-  image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400', category: 'Design',
-  url: 'https://www.canva.com/', clicks: 320000
-},
-{
-  id: '4', title: 'Crunchyroll', description: 'Watch anime & read manga',
-  image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400', category: 'Entertainment',
-  url: 'https://www.crunchyroll.com/', clicks: 280000
-}];
-
+{ id: '1', title: 'ChatGPT', description: 'AI assistant for conversations & tasks', image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400', category: 'AI', url: 'https://chat.openai.com/', clicks: 450000 },
+{ id: '2', title: 'Solar System Scope', description: 'Interactive 3D solar system explorer', image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400', category: 'Space', url: 'https://www.solarsystemscope.com/', clicks: 89000 },
+{ id: '3', title: 'Canva', description: 'Easy graphic design for everyone', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400', category: 'Design', url: 'https://www.canva.com/', clicks: 320000 },
+{ id: '4', title: 'Crunchyroll', description: 'Watch anime & read manga', image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400', category: 'Entertainment', url: 'https://www.crunchyroll.com/', clicks: 280000 }];
 
 // Trending Links
 const trendingLinks = [
@@ -104,7 +54,6 @@ const trendingLinks = [
 { id: '7', title: 'Unreal Engine - Game Dev', url: 'https://www.unrealengine.com/', clicks: 134000, premium: true },
 { id: '8', title: 'Khan Academy - Free Learning', url: 'https://www.khanacademy.org/', clicks: 267000 }];
 
-
 // More Premium Links Grid
 const morePremiumLinks = [
 { title: 'Adobe Creative Cloud', url: 'https://www.adobe.com/creativecloud.html', icon: Palette, category: 'Design' },
@@ -114,26 +63,32 @@ const morePremiumLinks = [
 { title: 'Grammarly', url: 'https://www.grammarly.com/', icon: BookOpen, category: 'Writing' },
 { title: 'Loom', url: 'https://www.loom.com/', icon: Monitor, category: 'Video' }];
 
-
 export default function Index() {
   const { user } = useAuth();
   const { isPremium } = useSubscription();
   const [searchQuery, setSearchQuery] = useState('');
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [selectedLinkTitle, setSelectedLinkTitle] = useState('');
+  const [browserUrl, setBrowserUrl] = useState('');
+  const [browserTitle, setBrowserTitle] = useState('');
+  const [browserOpen, setBrowserOpen] = useState(false);
 
-  // All links are now free to access
-  const handleLinkClick = (_e: React.MouseEvent, _url: string, _isPremiumLink: boolean, _title: string) => {
-    // No premium gating - all links open normally
+  const handleLinkClick = (e: React.MouseEvent, url: string, isPremiumLink: boolean, title: string) => {
+    e.preventDefault();
+    if (isPremiumLink && !isPremium) {
+      setSelectedLinkTitle(title);
+      setPremiumModalOpen(true);
+      return;
+    }
+    setBrowserUrl(url);
+    setBrowserTitle(title);
+    setBrowserOpen(true);
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <PremiumModal
-        open={premiumModalOpen}
-        onOpenChange={setPremiumModalOpen}
-        linkTitle={selectedLinkTitle} />
-
+      <PremiumModal open={premiumModalOpen} onOpenChange={setPremiumModalOpen} linkTitle={selectedLinkTitle} />
+      <EmbeddedBrowser url={browserUrl} title={browserTitle} isOpen={browserOpen} onClose={() => setBrowserOpen(false)} />
 
       {/* Navbar */}
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -171,7 +126,6 @@ export default function Index() {
                   </Badge>
               }
               </> :
-
             <>
                 <Link to="/auth">
                   <Button variant="ghost" size="sm">Sign in</Button>
@@ -193,7 +147,6 @@ export default function Index() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/5 to-background" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5Qzk2QkEiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         
-        {/* Floating Elements */}
         <div className="absolute top-20 left-10 h-20 w-20 rounded-full bg-primary/20 blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-10 h-32 w-32 rounded-full bg-accent/20 blur-3xl animate-pulse delay-700" />
         <div className="absolute top-1/2 left-1/4 h-16 w-16 rounded-full bg-amber-500/20 blur-2xl animate-pulse delay-300" />
@@ -217,7 +170,6 @@ export default function Index() {
               <span className="text-foreground font-medium"> All in one place.</span>
             </p>
 
-            {/* Search Bar - Larger */}
             <div className="relative max-w-2xl mx-auto mb-10">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground" />
               <Input
@@ -225,14 +177,12 @@ export default function Index() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-14 pr-6 h-16 text-lg rounded-2xl border-2 border-border focus:border-primary shadow-xl bg-background/80 backdrop-blur-sm" />
-
               <Button className="absolute right-2 top-1/2 -translate-y-1/2 rounded-xl h-12 px-6" size="lg">
                 <Search className="h-5 w-5 mr-2" />
                 Search
               </Button>
             </div>
 
-            {/* Stats */}
             <div className="flex flex-wrap justify-center gap-8 text-center">
               <div>
                 <p className="text-3xl font-bold text-foreground">500+</p>
@@ -253,7 +203,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Categories Grid - Larger */}
+      {/* Categories Grid */}
       <section className="container max-w-7xl mx-auto px-4 py-20">
         <div className="flex items-center justify-between mb-10">
           <div>
@@ -265,33 +215,32 @@ export default function Index() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {categories.map((category) =>
           <div
             key={category.id}
             onClick={(e) => handleLinkClick(e, '#', category.premium || false, category.name)}
-            className="group relative bg-card border border-border rounded-3xl p-8 hover:shadow-2xl hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 cursor-pointer">
-
+            className="group relative bg-card border border-border rounded-3xl p-6 md:p-8 hover:shadow-2xl hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 cursor-pointer">
               {category.premium &&
             <Badge className="absolute -top-3 -right-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 shadow-lg">
                   <Lock className="h-3 w-3 mr-1" />
                   Premium
                 </Badge>
             }
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-lg`}>
-                <category.icon className="h-8 w-8 text-white" />
+              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 md:mb-5 group-hover:scale-110 transition-transform shadow-lg`}>
+                <category.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
               </div>
-              <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{category.name}</h3>
-              <p className="text-sm text-muted-foreground">{category.count} links</p>
+              <h3 className="font-semibold text-sm md:text-lg mb-1 md:mb-2 group-hover:text-primary transition-colors">{category.name}</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">{category.count} links</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* Premium Featured - Large Cards */}
+      {/* Premium Featured */}
       <section className="bg-gradient-to-br from-amber-500/5 via-background to-orange-500/5 py-20">
         <div className="container max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between mb-10">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-4">
             <div className="flex items-center gap-4">
               <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
                 <Crown className="h-7 w-7 text-white" />
@@ -309,38 +258,35 @@ export default function Index() {
             </Link>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {premiumFeaturedLinks.map((link) =>
             <a
               key={link.id}
               href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
               onClick={(e) => handleLinkClick(e, link.url, link.premium, link.title)}
               className="group bg-card border border-border rounded-3xl overflow-hidden hover:shadow-2xl hover:border-amber-500/30 transition-all duration-300 block hover:-translate-y-2">
-
                 <div className="relative aspect-video overflow-hidden">
                   <img src={link.image} alt={link.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <Badge className="absolute top-4 left-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 shadow-lg">
+                  <Badge className="absolute top-3 left-3 md:top-4 md:left-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 shadow-lg text-xs">
                     <Lock className="h-3 w-3 mr-1" />
                     Premium
                   </Badge>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <Badge variant="secondary" className="mb-2 text-xs bg-white/20 backdrop-blur-sm text-white border-0">
+                  <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4">
+                    <Badge variant="secondary" className="mb-1 md:mb-2 text-xs bg-white/20 backdrop-blur-sm text-white border-0">
                       {link.category}
                     </Badge>
-                    <h3 className="font-semibold text-white text-lg">{link.title}</h3>
+                    <h3 className="font-semibold text-white text-sm md:text-lg">{link.title}</h3>
                   </div>
                 </div>
-                <div className="p-5">
-                  <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{link.description}</p>
+                <div className="p-3 md:p-5">
+                  <p className="text-xs md:text-sm text-muted-foreground line-clamp-2 mb-2 md:mb-4">{link.description}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-muted-foreground flex items-center gap-1">
                       <TrendingUp className="h-3 w-3" />
                       {(link.clicks / 1000).toFixed(0)}k clicks
                     </span>
-                    <span className="text-sm font-medium text-amber-500 flex items-center gap-1">
+                    <span className="text-xs md:text-sm font-medium text-amber-500 flex items-center gap-1">
                       {isPremium ? 'Open' : 'Unlock'} <ExternalLink className="h-3 w-3" />
                     </span>
                   </div>
@@ -365,29 +311,27 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {freeFeaturedLinks.map((link) =>
           <a
             key={link.id}
             href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={(e) => handleLinkClick(e, link.url, false, link.title)}
             className="group bg-card border border-border rounded-3xl overflow-hidden hover:shadow-2xl hover:border-primary/30 transition-all duration-300 block hover:-translate-y-2">
-
               <div className="relative aspect-video overflow-hidden">
                 <img src={link.image} alt={link.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               </div>
-              <div className="p-5">
-                <Badge variant="secondary" className="mb-2 text-xs">{link.category}</Badge>
-                <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{link.title}</h3>
-                <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{link.description}</p>
+              <div className="p-3 md:p-5">
+                <Badge variant="secondary" className="mb-1 md:mb-2 text-xs">{link.category}</Badge>
+                <h3 className="font-semibold text-sm md:text-lg mb-1 md:mb-2 group-hover:text-primary transition-colors">{link.title}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground line-clamp-2 mb-2 md:mb-4">{link.description}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-muted-foreground flex items-center gap-1">
                     <TrendingUp className="h-3 w-3" />
                     {(link.clicks / 1000).toFixed(0)}k clicks
                   </span>
-                  <span className="text-sm font-medium text-primary flex items-center gap-1">
+                  <span className="text-xs md:text-sm font-medium text-primary flex items-center gap-1">
                     Visit <ExternalLink className="h-3 w-3" />
                   </span>
                 </div>
@@ -401,7 +345,6 @@ export default function Index() {
       <section className="bg-secondary/30 py-20">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-3 gap-10">
-            {/* Trending Links */}
             <div className="lg:col-span-2">
               <div className="flex items-center gap-4 mb-8">
                 <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center shadow-lg">
@@ -415,20 +358,17 @@ export default function Index() {
                 <a
                   key={link.id}
                   href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   onClick={(e) => handleLinkClick(e, link.url, link.premium || false, link.title)}
-                  className="flex items-center gap-5 p-5 border-b border-border last:border-0 hover:bg-secondary/50 transition-colors">
-
-                    <span className="text-3xl font-bold text-muted-foreground w-10">{index + 1}</span>
-                    <div className="flex-1">
-                      <h3 className="font-medium text-lg flex items-center gap-2">
+                  className="flex items-center gap-3 md:gap-5 p-4 md:p-5 border-b border-border last:border-0 hover:bg-secondary/50 transition-colors">
+                    <span className="text-2xl md:text-3xl font-bold text-muted-foreground w-8 md:w-10">{index + 1}</span>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-medium text-sm md:text-lg flex items-center gap-2 truncate">
                         {link.title}
-                        {link.premium && <Lock className="h-4 w-4 text-amber-500" />}
+                        {link.premium && <Lock className="h-4 w-4 text-amber-500 shrink-0" />}
                       </h3>
-                      <span className="text-sm text-muted-foreground">{(link.clicks / 1000).toFixed(0)}k clicks</span>
+                      <span className="text-xs md:text-sm text-muted-foreground">{(link.clicks / 1000).toFixed(0)}k clicks</span>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                    <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
                   </a>
                 )}
               </div>
@@ -438,7 +378,7 @@ export default function Index() {
             <div>
               <div className="sticky top-24">
                 <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-rose-500 p-[3px] rounded-3xl shadow-2xl">
-                  <div className="bg-card rounded-3xl p-8">
+                  <div className="bg-card rounded-3xl p-6 md:p-8">
                     <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-6 shadow-lg">
                       <Crown className="h-8 w-8 text-white" />
                     </div>
@@ -496,20 +436,17 @@ export default function Index() {
           <p className="text-lg text-muted-foreground">Professional software and exclusive content</p>
         </div>
 
-        <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
           {morePremiumLinks.map((link) =>
           <a
             key={link.title}
             href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
             onClick={(e) => handleLinkClick(e, link.url, true, link.title)}
-            className="group bg-card border border-border rounded-2xl p-6 hover:shadow-xl hover:border-amber-500/30 transition-all duration-300 text-center hover:-translate-y-1">
-
-              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <link.icon className="h-6 w-6 text-amber-500" />
+            className="group bg-card border border-border rounded-2xl p-4 md:p-6 hover:shadow-xl hover:border-amber-500/30 transition-all duration-300 text-center hover:-translate-y-1">
+              <div className="h-10 w-10 md:h-12 md:w-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform">
+                <link.icon className="h-5 w-5 md:h-6 md:w-6 text-amber-500" />
               </div>
-              <h3 className="font-semibold text-sm mb-1">{link.title}</h3>
+              <h3 className="font-semibold text-xs md:text-sm mb-1">{link.title}</h3>
               <p className="text-xs text-muted-foreground">{link.category}</p>
               <Lock className="h-3 w-3 text-amber-500 mx-auto mt-2" />
             </a>
@@ -519,22 +456,22 @@ export default function Index() {
 
       {/* Footer */}
       <footer className="border-t border-border bg-secondary/30">
-        <div className="container max-w-7xl mx-auto px-4 py-16">
-          <div className="grid md:grid-cols-4 gap-10 mb-10">
-            <div>
+        <div className="container max-w-7xl mx-auto px-4 py-12 md:py-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-10">
+            <div className="col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
                 <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
                   <Globe className="h-6 w-6 text-white" />
                 </div>
                 <span className="font-display font-bold text-2xl">Fluxo</span>
               </div>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Your ultimate content portal for discovering the best links on the web.
               </p>
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-lg">Categories</h4>
-              <ul className="space-y-3 text-muted-foreground">
+              <ul className="space-y-3 text-muted-foreground text-sm">
                 <li><Link to="/music" className="hover:text-foreground transition-colors">Music & Audio</Link></li>
                 <li><Link to="/development" className="hover:text-foreground transition-colors">Development</Link></li>
                 <li><Link to="/productivity" className="hover:text-foreground transition-colors">Productivity</Link></li>
@@ -543,7 +480,7 @@ export default function Index() {
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-lg">Account</h4>
-              <ul className="space-y-3 text-muted-foreground">
+              <ul className="space-y-3 text-muted-foreground text-sm">
                 <li><Link to="/dashboard" className="hover:text-foreground transition-colors">Dashboard</Link></li>
                 <li><Link to="/premium" className="hover:text-foreground transition-colors">Premium</Link></li>
                 <li><Link to="/settings" className="hover:text-foreground transition-colors">Settings</Link></li>
@@ -551,7 +488,7 @@ export default function Index() {
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-lg">Legal</h4>
-              <ul className="space-y-3 text-muted-foreground">
+              <ul className="space-y-3 text-muted-foreground text-sm">
                 <li><Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
                 <li><Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
               </ul>
@@ -564,5 +501,4 @@ export default function Index() {
         </div>
       </footer>
     </div>);
-
 }
