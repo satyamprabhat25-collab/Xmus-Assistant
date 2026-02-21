@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { X, Send, Sparkles, Loader2, Download, ExternalLink } from 'lucide-react';
+import { X, Send, Sparkles, Loader2, Download, ExternalLink, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 const PLAY_STORE_URL = 'https://play.google.com/store/search?q=lucix+ai&c=apps';
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/lucix-chat`;
@@ -109,10 +108,10 @@ export function LucixAIWidget() {
 
   return (
     <>
-      {/* Floating Button */}
+      {/* Floating Button - Prominent with "AI" label */}
       <button
         onClick={() => setIsOpen(prev => !prev)}
-        className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-50 h-14 w-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+        className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-50 flex items-center gap-2 rounded-full shadow-2xl px-5 h-14 transition-all duration-300 hover:scale-110 active:scale-95"
         style={{
           background: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7)',
           boxShadow: '0 8px 32px rgba(99, 102, 241, 0.5)',
@@ -122,13 +121,16 @@ export function LucixAIWidget() {
         {isOpen ? (
           <X className="h-6 w-6 text-white" />
         ) : (
-          <Sparkles className="h-6 w-6 text-white" />
+          <>
+            <Bot className="h-6 w-6 text-white" />
+            <span className="text-white font-bold text-sm">AI</span>
+          </>
         )}
       </button>
 
       {/* Chat Panel */}
       {isOpen && (
-        <div className="fixed bottom-44 right-4 md:bottom-24 md:right-6 z-50 w-80 md:w-96 rounded-2xl border border-border bg-card shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 duration-300 flex flex-col" style={{ maxHeight: '70vh' }}>
+        <div className="fixed bottom-44 right-4 md:bottom-24 md:right-6 z-50 w-[calc(100vw-2rem)] max-w-96 rounded-2xl border border-border bg-card shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 duration-300 flex flex-col" style={{ maxHeight: '70vh' }}>
           {/* Header */}
           <div
             className="p-4 flex items-center justify-between flex-shrink-0"
@@ -136,11 +138,11 @@ export function LucixAIWidget() {
           >
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                <Sparkles className="h-5 w-5 text-white" />
+                <Bot className="h-5 w-5 text-white" />
               </div>
               <div>
                 <h3 className="font-bold text-white text-sm">Lucix AI</h3>
-                <p className="text-white/80 text-xs">Free AI Assistant</p>
+                <p className="text-white/80 text-xs">Free & Unlimited ✨</p>
               </div>
             </div>
             <a
@@ -159,9 +161,9 @@ export function LucixAIWidget() {
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3" style={{ minHeight: '200px', maxHeight: '400px' }}>
             {messages.length === 0 && (
               <div className="text-center py-8">
-                <Sparkles className="h-10 w-10 mx-auto mb-3 text-muted-foreground/50" />
+                <Bot className="h-10 w-10 mx-auto mb-3 text-muted-foreground/50" />
                 <p className="text-sm text-muted-foreground font-medium">Hi! I'm Lucix AI 👋</p>
-                <p className="text-xs text-muted-foreground mt-1">Ask me anything — I'm here to help!</p>
+                <p className="text-xs text-muted-foreground mt-1">Ask me anything — Free & Unlimited!</p>
               </div>
             )}
             {messages.map((msg, i) => (
