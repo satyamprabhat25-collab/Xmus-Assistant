@@ -122,14 +122,9 @@ export default function Index() {
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [selectedLinkTitle, setSelectedLinkTitle] = useState('');
 
-  const handleLinkClick = (e: React.MouseEvent, url: string, isPremiumLink: boolean, title: string) => {
-    if (isPremiumLink && !isPremium) {
-      e.preventDefault();
-      setSelectedLinkTitle(title);
-      setPremiumModalOpen(true);
-      return;
-    }
-    // Premium users or free links - open normally
+  // All links are now free to access
+  const handleLinkClick = (_e: React.MouseEvent, _url: string, _isPremiumLink: boolean, _title: string) => {
+    // No premium gating - all links open normally
   };
 
   return (

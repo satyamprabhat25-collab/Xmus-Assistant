@@ -35,12 +35,8 @@ export default function MusicPage() {
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [selectedLinkTitle, setSelectedLinkTitle] = useState('');
 
-  const handleLinkClick = (e: React.MouseEvent, url: string, isPremiumLink: boolean, title: string) => {
-    if (isPremiumLink && !isPremium) {
-      e.preventDefault();
-      setSelectedLinkTitle(title);
-      setPremiumModalOpen(true);
-    }
+  const handleLinkClick = (_e: React.MouseEvent, _url: string, _isPremiumLink: boolean, _title: string) => {
+    // No premium gating - all links open normally
   };
 
   return (
